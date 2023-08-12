@@ -10,10 +10,12 @@ type Props = {
 const BrandDetail = ({ ...props }: Props) => {
     const [brand, setBrand] = useState<Brand>();
     useEffect(() => {
-        findById_Brands(props.id).then(resp => {
-            setBrand(resp)
-        }).catch(error => console.log(error));
-    }, []);
+        if (props.id) {
+            findById_Brands(props.id).then(resp => {
+                setBrand(resp)
+            }).catch(error => console.log(error.message));
+        }
+    }, [props.id]);
     // SUBMIT FORM
     const { register, handleSubmit } = useForm<Brand>();
     const onSubmit: SubmitHandler<Brand> = (data) => {
