@@ -5,33 +5,29 @@ import AdminLayout from "src/components/Layout/AdminLayout";
 import { useQuery } from "src/util/CustomHook";
 import Brands from "./BrandTable";
 import BrandDetail from "./BrandDetail";
+import { useLocation } from "react-router-dom";
 
 const BrandPage = () => {
     const query = useQuery();
     const [brands, setBrands] = useState<Brand[]>();
     const id = query.get("id");
+    const [showPage, setShowPage] = useState("list");
     const handleClick = () => {
-        const history = window.history;
-        const state = {
-            q: null,
-        };
         const newUrl = `${window.location.origin}${window.location.pathname}`;
-
-        history.pushState(state, "", newUrl);
-        setShowPage("list");
+        window.location.href = newUrl;
     }
     useEffect(() => {
         findAll_Brands().then(resp => {
             setBrands(resp)
         }).catch(error => console.log(error));
     }, []);
-    const [showPage, setShowPage] = useState("list");
+
     return (
         <AdminLayout>
             {showPage === "list" &&
                 <>
                     <Brands handleChange={(() => { setShowPage("add") })} list={brands} />
-                    <button className="btn btn-outline-primary me-2" onClick={(() => { setShowPage("add") })}>Tạo mới</button>
+                    <button className="btn btn-outline-primary me-2" onClick={(() => { setShowPage("add"); })}>Tạo mới</button>
                 </>
             }
             {showPage === "add" &&
@@ -41,11 +37,10 @@ const BrandPage = () => {
                         <button className="btn btn-success me-2" onClick={(() => { })}>Cập nhật</button>
                         <button className="btn btn-danger me-2" onClick={(() => {
                             delete_Brands(query.get("id")).then(resp => {
-                                resp === 200 ? (
+                                resp === 200 ?
                                     window.location.href = "/admin/brands"
-                                )
                                     :
-                                    alert("Lỗi xoá thành công !")
+                                    alert("Lỗi xoá không thành công !")
                             })
                         })}>Xoá</button>
                         <button className="btn btn-outline-danger me-2" onClick={handleClick}>Thoát</button>

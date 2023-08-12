@@ -17,7 +17,6 @@ const BrandDetail = ({ ...props }: Props) => {
     // SUBMIT FORM
     const { register, handleSubmit } = useForm<Brand>();
     const onSubmit: SubmitHandler<Brand> = (data) => {
-        console.log(data);
         async function init() {
             const { status: result } = await useFetch.post("/api/brand/save", data);
             result === 200 ? alert("Thêm mới thành công !!") : alert("Lỗi !")

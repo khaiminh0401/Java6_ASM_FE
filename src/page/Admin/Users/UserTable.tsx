@@ -33,7 +33,7 @@ const UserTable = (props: Props) => {
                                     <td>{value.password}</td>
                                     <td>{value.phone}</td>
                                     <td>{value.admin ? "Admin" : "Customer"}</td>
-                                    <td><Link to={"/admin/users/?id=" + value.id} onClick={props.handleChange} className="text-decoration-none">Edit</Link></td>
+                                    <td><Link to={"/admin/users?id=" + value.id} onClick={props.handleChange} className="text-decoration-none">Edit</Link></td>
                                 </tr>
                             )
                         })}
